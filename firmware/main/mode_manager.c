@@ -10,6 +10,7 @@
 #include "mode_manager.h"
 #include "timer.h"
 #include "piano.h"
+#include "memory_game.h"
 #include "led.h"
 #include "piezo.h"
 #include "button.h"
@@ -41,6 +42,7 @@ static void leave_current_mode(void)
             piano_reset();
             break;
         case MODE_MEMORY:
+            memory_game_reset();
             break;
         default:
             break;
@@ -72,9 +74,8 @@ static void enter_mode(app_mode_t mode)
             piano_enter();
             break;
         case MODE_MEMORY:
-            ESP_LOGI(TAG, "Entering MEMORY mode (stub)");
-            led_set_intensity(0.3f);
-            led_set_color(LED_COLOR_YELLOW);
+            ESP_LOGI(TAG, "Entering MEMORY mode");
+            memory_game_enter();
             break;
         default:
             break;
@@ -168,6 +169,7 @@ void mode_manager_init(void)
     last_timer_state = TIMER_STATE_IDLE;
     last_jingle_time = 0;
     piano_init();
+    memory_game_init();
     ESP_LOGI(TAG, "Mode manager initialised (POMODORO)");
 }
 
@@ -189,7 +191,7 @@ void mode_manager_handle_button(uint8_t button_id, bool is_long_press)
             piano_handle_button(button_id, is_long_press);
             break;
         case MODE_MEMORY:
-            // stub -- ignore
+            memory_game_handle_button(button_id, is_long_press);
             break;
         default:
             break;
@@ -206,8 +208,7 @@ void mode_manager_update(void)
             piano_update();
             break;
         case MODE_MEMORY:
-            led_set_intensity(0.3f);
-            led_set_color(LED_COLOR_YELLOW);
+            memory_game_update();
             break;
         default:
             break;

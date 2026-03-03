@@ -1,7 +1,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
-#include "esp_pm.h"
 #include "nvs_flash.h"
 #include "led.h"
 #include "button.h"
@@ -28,19 +27,8 @@ void app_main(void)
 
     ESP_LOGI(TAG, "GlowPad Starting");
 
-    // Configure power management
-    esp_pm_config_t pm_config = {
-        .max_freq_mhz = 80,
-        .min_freq_mhz = 80,
-        .light_sleep_enable = false
-    };
-    esp_err_t ret = esp_pm_configure(&pm_config);
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to configure power management: %s", esp_err_to_name(ret));
-    }
-
     // Initialize NVS
-    ret = nvs_flash_init();
+    esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
