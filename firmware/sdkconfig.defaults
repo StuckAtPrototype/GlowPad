@@ -1,0 +1,7 @@
+# GlowPad defaults: enable TinyUSB HID for Media Control mode (5th mode)
+CONFIG_TINYUSB_HID_COUNT=1
+CONFIG_TINYUSB_CDC_COUNT=1
+
+# Keep boot console on UART; app redirects logs to TinyUSB CDC after USB init.
+CONFIG_ESP_CONSOLE_UART_DEFAULT=y
+CONFIG_ESP_CONSOLE_SECONDARY_NONE=y

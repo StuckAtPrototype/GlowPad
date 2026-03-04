@@ -1,0 +1,4 @@
+## GlowPad main component – optional USB HID for Media mode
+description: "GlowPad firmware main component"
+dependencies:
+  esp_tinyusb: "*"

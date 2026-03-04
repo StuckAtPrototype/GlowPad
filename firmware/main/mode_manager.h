@@ -3,7 +3,7 @@
  * @brief Application mode manager
  *
  * Manages switching between Pomodoro, Piano, Memory Game, and Reaction
- * Game modes.  Long-pressing keys 0-3 switches modes; all other button
+ * Game modes.  Long-pressing keys 0-4 switches modes; all other button
  * events are forwarded to the currently active mode handler.
  */
 
@@ -22,6 +22,7 @@ typedef enum {
     MODE_PIANO,
     MODE_MEMORY,
     MODE_REACTION,
+    MODE_MEDIA,
     MODE_COUNT
 } app_mode_t;
 
@@ -33,7 +34,7 @@ void mode_manager_init(void);
 /**
  * @brief Process a button event
  *
- * Long press on keys 0-3 triggers a mode switch.
+ * Long press on keys 0-4 triggers a mode switch.
  * Everything else is forwarded to the active mode handler.
  */
 void mode_manager_handle_button(uint8_t button_id, bool is_long_press);

@@ -12,6 +12,7 @@
 #include "piano.h"
 #include "memory_game.h"
 #include "reaction_game.h"
+#include "media_control.h"
 #include "led.h"
 #include "piezo.h"
 #include "button.h"
@@ -47,6 +48,9 @@ static void leave_current_mode(void)
             break;
         case MODE_REACTION:
             reaction_game_reset();
+            break;
+        case MODE_MEDIA:
+            media_control_reset();
             break;
         default:
             break;
@@ -84,6 +88,10 @@ static void enter_mode(app_mode_t mode)
         case MODE_REACTION:
             ESP_LOGI(TAG, "Entering REACTION mode");
             reaction_game_enter();
+            break;
+        case MODE_MEDIA:
+            ESP_LOGI(TAG, "Entering MEDIA mode");
+            media_control_enter();
             break;
         default:
             break;
@@ -179,14 +187,16 @@ void mode_manager_init(void)
     piano_init();
     memory_game_init();
     reaction_game_init();
+    media_control_init();
     ESP_LOGI(TAG, "Mode manager initialised (POMODORO)");
 }
 
 void mode_manager_handle_button(uint8_t button_id, bool is_long_press)
 {
-    // Long press on keys 0-2 triggers a mode switch
+    // Long press on keys 0-4 triggers a mode switch
     if (is_long_press && button_id < MODE_COUNT) {
         app_mode_t target = (app_mode_t)button_id;
+        ESP_LOGI(TAG, "Long press on key %u -> switch to mode %u", button_id, target);
         switch_mode(target);
         return;
     }
@@ -204,6 +214,9 @@ void mode_manager_handle_button(uint8_t button_id, bool is_long_press)
             break;
         case MODE_REACTION:
             reaction_game_handle_button(button_id, is_long_press);
+            break;
+        case MODE_MEDIA:
+            media_control_handle_button(button_id, is_long_press);
             break;
         default:
             break;
@@ -224,6 +237,9 @@ void mode_manager_update(void)
             break;
         case MODE_REACTION:
             reaction_game_update();
+            break;
+        case MODE_MEDIA:
+            media_control_update();
             break;
         default:
             break;

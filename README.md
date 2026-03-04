@@ -1,6 +1,6 @@
 # GlowPad
 
-A multi-mode interactive pad built on the ESP32-S3 with 5 capacitive touch keys, 5 WS2812B LEDs, and a piezo buzzer. Supports four modes: a Pomodoro timer, a pentatonic piano, a Simon-style memory game, and a reaction speed game.
+A multi-mode interactive pad built on the ESP32-S3 with 5 capacitive touch keys, 5 WS2812B LEDs, and a piezo buzzer. Supports five modes: a Pomodoro timer, a pentatonic piano, a Simon-style memory game, a reaction speed game, and a USB media-control (keyboard) mode for music players.
 
 ## Hardware
 
@@ -13,7 +13,7 @@ A multi-mode interactive pad built on the ESP32-S3 with 5 capacitive touch keys,
 
 ## Modes
 
-Switch modes by long-pressing keys 1-4 (the first four pads).
+Switch modes by long-pressing keys 1–5 (pads 1–5).
 
 ### 1. Pomodoro Timer (key 1 long press)
 
@@ -71,6 +71,24 @@ A "good" round requires pressing the correct key in under 450ms. Per-round times
 
 **Idle LEDs:** purple at 30%.
 
+### 5. Media Control (key 5 long press)
+
+USB HID Consumer (media keys) mode. Connect GlowPad to the host via **native USB** (ESP32-S3 USB D+/D− on GPIO 20/19). The five pads act as media keys:
+
+| Key | Action |
+|---|---|
+| 1 | Previous track |
+| 2 | Play / Pause |
+| 3 | Next track |
+| 4 | Volume down |
+| 5 | Volume up |
+
+Works with most music players (Spotify, VLC, system media keys, etc.). Short press sends the key; the corresponding LED flashes for feedback.
+
+**Idle LEDs:** orange/amber at 30%.
+
+**Note:** Media mode requires the `esp_tinyusb` component (pulled in automatically) and HID enabled in menuconfig (`CONFIG_TINYUSB_HID_ENABLED`). The firmware uses a custom HID Consumer report descriptor.
+
 ## Building
 
 Requires [ESP-IDF v5.5+](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/get-started/).
@@ -96,6 +114,7 @@ GlowPad/firmware/main/
 ├── piano.c/h           # Piano mode
 ├── memory_game.c/h     # Simon-style memory game
 ├── reaction_game.c/h   # Reaction speed game
+├── media_control.c/h   # USB HID media keys mode
 ├── led_color_lib.c/h   # Colour generation utilities
 └── serial_protocol.c/h # Serial protocol (placeholder)
 ```

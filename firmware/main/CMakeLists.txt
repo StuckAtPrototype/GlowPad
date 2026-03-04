@@ -9,6 +9,7 @@ idf_component_register(SRCS "main.c"
                                 "piano.c"
                                 "memory_game.c"
                                 "reaction_game.c"
+                                "media_control.c"
                                 "serial_protocol.c"
-                       PRIV_REQUIRES spi_flash esp_driver_rmt esp_driver_ledc esp_driver_gpio esp_driver_uart esp_driver_touch_sens nvs_flash
+                       PRIV_REQUIRES spi_flash esp_driver_rmt esp_driver_ledc esp_driver_gpio esp_driver_uart esp_driver_touch_sens nvs_flash esp_tinyusb
                        INCLUDE_DIRS "")
