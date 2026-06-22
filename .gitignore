@@ -1,13 +1,16 @@
-build/
-dependencies.lock
+# Editors / OS
 .idea/
-cmake-build-debug/
-sdkconfig.old
-sdkconfig
-venv/
+.vscode/
 .DS_Store
-hardware/racer/fp-info-cache
-hardware/racer/racer-backups
+desktop.ini
+*.swp
+
+# Python
+venv/
+__pycache__/
+
+# CMake
+cmake-build-debug/
 
 # ESP-IDF firmware build outputs
 firmware/build/
@@ -15,3 +18,14 @@ firmware/sdkconfig
 firmware/sdkconfig.old
 firmware/dependencies.lock
 firmware/managed_components/
+
+# KiCad (hardware) - generated/local-only files
+hardware/**/*.kicad_prl
+hardware/**/*-backups/
+hardware/**/fp-info-cache
+hardware/**/*.lck
+hardware/**/~*.kicad_*
+hardware/**/.~lock.*#
+hardware/**/*.bak
+hardware/**/*.kicad_pcb-bak
+hardware/**/*.kicad_sch-bak
